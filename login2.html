@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Login</title>
+	<script type="text/javascript" src="jquery.js"></script>
+	<script type="text/javascript" src="usuariofrontend.js"></script>
+	<link rel="stylesheet" href="proyecto.css">
+</head>
+<header>
+		<div class="menu">
+		<a href="proyecto.html">Inicio</a>
+		<a href="listadodehoteles.html">Hoteles</a>
+		<a href="Calendario.html">Calendario</a>
+		<a href="formulariohotel.html">Agregar Hoteles</a>
+		<a href="Formularioadministrador.html">Agregar Administrador</a>
+		<a href="Formulariousuario.html">Agregar Usuario</a>
+		<a href="login.html">Accede como Administrador</a>
+		<button id="boton" onclick="salir()">Salir del Sistema</button>
+		</div>
+	</header>
+<body>
+	<script type="text/javascript">
+		function salir(){
+			localStorage.removeItem("Usuariolog");
+			localStorage.removeItem("Personalog");
+			location.href="login2.html";
+		}
+
+	</script>
+	<style type="text/css">
+		input{
+			 margin-top:50px; 
+		}
+		#boton{ 
+			margin-top:20px; 
+		 }
+
+	</style>
+	<input type="text" id="email" placeholder="Email">
+	<input type="text" id="clave" placeholder="Clave">
+	<button id="boton" onclick="Login()">Ingresar</button>
+
+
+	<script type="text/javascript">
+		 function Login(){ 
+		 	usuarioinstanciado = new _usa(0,"",document.getElementById("clave"), document.getElementById("email").value,0,"");
+		 	usuarioinstanciado.Login().then(function(response){ 
+		 		alert("Hola");
+		 		localStorage.setItem("Personalog",JSON.stringify(response));
+		 		location.href="proyecto.html";
+		 	}),
+		 	function(error)
+		 	{ 
+		 		alert(error)
+		 	}
+		 }
+	</script>
+</body>
+</html>

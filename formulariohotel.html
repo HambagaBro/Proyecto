@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Formulario Hotel</title>
+	<script type="text/javascript" src="jquery.js"></script>
+	<link rel="stylesheet" href="formulariohotel.css">
+	<link rel="stylesheet" href="proyecto.css">
+</head>
+<header>
+		<div class="menu">
+		<a href="proyecto.html">Inicio</a>
+		<a href="listadodehoteles.html">Hoteles</a>
+		<a href="login.html">Accede a tu cuenta </a>
+		<a href="Calendario.html">Calendario</a>
+		<a href="Formularioadministrador.html">Agregar Administrador</a>
+		<a href="login.html">Accede como Administrador</a>
+		<a href="Formulariousuario.html">Agregar Usuario</a>
+		<a href="login2.html">Acceda como Usuario</a>
+
+		<button id="boton" onclick="salir()">Salir del Sistema</button>
+		</div>
+	</header>
+<body>
+	<h1>Registro de Hoteles</h1>
+
+	<input type="text" id="hotel" placeholder="Nombre del Hotel">
+	<input type="text" id="caracteristicas" placeholder="Caracteristicas">
+	<input type="text" id="ubicacion" placeholder="Ubicacion">
+	<input type="text" id="habitaciones" placeholder="Habitaciones">
+	<input type="number" id="estrellas" placeholder="Estrellas">
+	<input type="number" id="precio" placeholder="Precio">
+	<input type="date" id="fecha" placeholder="Fecha">
+	<input type="file" id="imagen" accept="image/*">
+  <br>
+
+  <button id="bt1" onclick="botonguardarclick()">Guardar</button>
+
+<script type="text/javascript">
+	
+ if(localStorage.getItem("Usuariolog")==null)
+ 			{ 
+ 				alert("Necesitas iniciar sesion como Administrador");
+ 				location.href = "login.html";
+ 			}
+
+
+	class _Hotel {
+	constructor (_id,
+		HOTEL,
+		CARACTERISTICAS,
+		UBICACION,
+		HABITACIONES,
+		IMAGEN,
+		ESTRELLAS,
+		PRECIO,
+		FECHA
+		) {
+		this._id=_id;
+		this.HOTEL=HOTEL;
+		this.CARACTERISTICAS=CARACTERISTICAS;
+		this.UBICACION=UBICACION;
+		this.HABITACIONES=HABITACIONES;
+		this.IMAGEN=IMAGEN;
+		this.ESTRELLAS=ESTRELLAS;
+		this.PRECIO=PRECIO;
+		this.FECHA=FECHA;
+	}
+
+Guardar(){
+	var objetoaenviar = this;
+	return new Promise(function(resolve,reject){
+
+		try{
+
+			var xhr=new XMLHttpRequest();
+xhr.open('POST', 'http://localhost:8080/api/nuevohotel');
+xhr.setRequestHeader('Content-Type', 'application/json');
+xhr.onload = function () {
+	if (xhr.status === 200) {
+		resolve(JSON.parse(xhr.responseText));
+	}
+	else{
+		reject(xhr);
+	}
+};
+xhr.send(JSON.stringify(objetoaenviar));
+		
+}
+catch(err){
+	reject(err.message);
+}
+	});
+}
+
+
+Seleccionartodos(){
+	var objetoaenviar = this;
+	return new Promise(function(resolve,reject){
+
+		try{
+
+			var xhr=new XMLHttpRequest();
+xhr.open('POST', 'http://localhost:8080/api/seleccionartodos');
+xhr.setRequestHeader('Content-Type', 'application/json');
+xhr.onload = function () {
+	if (xhr.status === 200) {
+		resolve(JSON.parse(xhr.responseText));
+	}
+	else{
+		reject(xhr);
+	}
+};
+xhr.send(JSON.stringify(objetoaenviar));
+		
+}
+catch(err){
+	reject(err.message);
+}
+	});
+}
+}
+
+	let imagenbase64 = "";
+	$("#imagen").change(function(){
+		readURL(this);
+	});
+		function readURL(input) {
+				if (input.files && input.files[0]) {
+					var reader = new FileReader();
+
+					reader.onload = function (e) {
+
+						imagenbase64=e.target.result;
+					}
+				reader.readAsDataURL(input.files[0]);
+		}
+	}
+
+	function botonguardarclick(){
+		var hotelinstanciado = new _Hotel(0,
+			document.getElementById("hotel").value,
+			document.getElementById("caracteristicas").value,
+			document.getElementById("ubicacion").value,
+			document.getElementById("habitaciones").value,
+			imagenbase64,
+			document.getElementById("estrellas").value,
+			document.getElementById("precio").value,
+			document.getElementById("fecha").value,
+			);
+
+			hotelinstanciado.Guardar().then(function(response){
+				console.log("Success!", response);
+				alert("Guardado con exito");
+			}, function(error){
+				console.error("Failed!", error);
+				alert("Error " + error)
+			});
+	}
+
+
+
+</script>
+</body>
+</html>

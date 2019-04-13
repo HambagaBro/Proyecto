@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Hoteles</title>
+	<link rel="stylesheet" href="proyecto.css">
+</head>
+	<header>
+		<div class="menu">
+		<a href="listadodehoteles.html">Hoteles</a>
+		<a href="Calendario.html">Calendario</a>
+		<a href="formulariohotel.html">Agregar Hoteles</a>
+		<a href="Formularioadministrador.html">Agregar Administrador</a>
+		<a href="login.html">Accede como Administrador</a>
+		<a href="Formulariousuario.html">Agregar Usuario</a>
+		<a href="login2.html">Acceda como Usuario</a>
+		<button id="boton" onclick="salir()">Salir del Sistema</button>
+		</div>
+	</header>
+<body>
+	<script type="text/javascript">
+		function salir(){
+			localStorage.removeItem("Usuariolog");
+			localStorage.removeItem("Personalog");
+			location.href="login2.html";
+		}
+
+	</script>
+
+	<table border="1px">
+		<tr>
+		<td><p>Nombre del Hotel</p>
+		</td>
+		<td>Caracteristicas del hotel</td>
+		<td>Precio, tamaño del cuarto, etc.
+			<img src="Alpaca Gyate.png" id="image1">
+		</td>
+		</tr>
+	</table>
+
+
+</body>
+</html>

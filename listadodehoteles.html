@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Listado de Hoteles</title>
+	<script type="text/javascript" src="jquery.js"></script>
+	<script type="text/javascript" src="hotelfrontend.js"></script>
+	<link rel="stylesheet" href="hoteles.css">
+	<link rel="stylesheet" href="proyecto.css">
+</head>
+<header>
+		<div class="menu">
+		<a href="proyecto.html">Inicio</a>
+		<a href="Calendario.html">Calendario</a>
+		<a href="formulariohotel.html">Agregar Hoteles</a>
+		<a href="Formularioadministrador.html">Agregar Administrador</a>
+		<a href="login.html">Accede como Administrador</a>
+		<a href="Formulariousuario.html">Agregar Usuario</a>
+		<a href="login2.html">Acceda como Usuario</a>
+		<button id="boton" onclick="salir()">Salir del Sistema</button>
+		</div>
+	</header>
+	<script type="text/javascript">
+		function salir(){
+			localStorage.removeItem("Usuariolog");
+			localStorage.removeItem("Personalog");
+			location.href="login2.html";
+		}
+
+	</script>
+<body onload="cargahotelesenlatabla()">
+<table id="tabladehoteles" border="1px">
+	<tr>
+		<script type="text/javascript">
+			function cargahotelesenlatabla()
+	{
+			var hotelinstanciado = new Hotel();
+
+			hotelinstanciado.Seleccionartodos().then(function(response){ 
+
+				for (var ele in response)
+				{
+					document.getElementById('tabladehoteles').innerHTML +=
+					"<tr><td>"+
+					response[ele].HOTEL + "</td><td>"+
+					response[ele].CARACTERISTICAS + "</td><td>"+
+					response[ele].UBICACION + " "+
+					response[ele].HABITACIONES + " "+
+					response[ele].PRECIO + " "+
+					response[ele].ESTRELLAS + "<img src='"+
+					response[ele].IMAGEN+ "' width = '100px' height= '100px'/>"+
+					response[ele].FECHA + "</td></tr>";
+				}
+
+					}, function(error) {
+						console.error("Failed!", error);
+						alert("Error " + error);
+		});
+	}
+		</script>
+</body>
+</html>

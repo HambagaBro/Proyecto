@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <link rel="stylesheet" type="text/css" href="Formularioadministrador.css">
+        <title>
+            Formulario
+          </title>
+          <meta charset="utf-8">
+        
+  <link rel="stylesheet" href="proyecto.css">
+</head>
+<header>
+    <div class="menu">
+    <a href="proyecto.html.html">Inicio</a>
+    <a href="listadodehoteles.html">Hoteles</a>
+    <a href="formulariohotel.html">Agregar Hoteles</a>
+    <a href="Calendario.html">Calendario</a>
+    <a href="Formularioadministrador.html">Agregar Administrador</a>
+    <a href="login.html">Accede como Administrador</a>
+    <a href="login2.html">Acceda como Usuario</a>
+
+    <button id="boton" onclick="salir()">Salir del Sistema</button>
+    </div>
+  </header>
+    <body>
+        <script type="text/javascript">
+    function salir(){
+      localStorage.removeItem("Usuariolog");
+      localStorage.removeItem("Personalog");
+      location.href="login2.html";
+    }
+  </script>
+        <table>
+            
+            <tr><td><input type="text" id="nombre" placeholder="Nombre"></td></tr>
+            <tr><td><input type="text" id="clave" placeholder="Clave"></td></tr>
+            <tr><td><input type="text" id="email" placeholder="Email"></td></tr>
+            <tr><td><input type="file" id="imgadmin" placeholder="Foto"></td></tr>
+            </td></tr>
+            <tr><td><button onclick="botonguardarclick()">Guardar</button></td></tr>
+            </table>
+
+            
+        
+        
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+ <script type="text/javascript" src="usuariofrontend.js"></script>
+
+ <script type="text/javascript">
+     
+ let imagenenbase64 = ""; //Aquí se convierte a código base 64.
+    
+    $("#imgadmin").change(function(){
+       readURL(this);
+ });
+    
+        function readURL(input) {
+
+                    if (input.files && input.files[0]) {
+                        var reader = new FileReader();
+
+                        reader.onload = function (e) {
+
+                            imagenenbase64=e.target.result;
+
+                        
+                          
+                        }
+
+                        reader.readAsDataURL(input.files[0]);
+                    }
+                }
+
+
+ function botonguardarclick()
+            {
+               let usactual = new _usa('0',
+        document.getElementById("nombre").value,
+              document.getElementById("clave").value,
+              document.getElementById("email").value,
+      imagenenbase64
+        
+        );
+        usactual.Guardar(usactual).then(function(response) {
+  console.log("Success!", response);
+            alert("Guardado con exito");
+
+}, function(error) {
+  console.error("Failed!", error);
+             alert("Error " + error);
+             
+});    
+                                                        
+            }
+
+
+
+
+
+
+
+ </script>
+
+
+    </body>
+
+</html>
